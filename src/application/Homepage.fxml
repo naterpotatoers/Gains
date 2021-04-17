@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <Label fx:id="labelTitle" layoutY="-3.0" prefHeight="93.0" prefWidth="778.0" text="                       Gains" textAlignment="JUSTIFY">
+      <Label fx:id="labelTitle" alignment="CENTER" layoutY="-3.0" prefHeight="93.0" prefWidth="778.0" text="Gains" textAlignment="JUSTIFY">
          <font>
             <Font size="50.0" />
          </font>
@@ -17,7 +17,7 @@
       <Label fx:id="labelWorkout" layoutX="389.0" layoutY="91.0" prefHeight="26.0" prefWidth="352.0" text="Last Workout" />
       <Button fx:id="buttonAddWorkout" layoutX="99.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToAddWorkout" prefHeight="26.0" prefWidth="121.0" text="Add Workout" />
       <Button fx:id="buttonViewHistory" layoutX="99.0" layoutY="427.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" text="View History" />
-      <TextArea layoutX="32.0" layoutY="124.0" prefHeight="206.0" prefWidth="270.0" />
-      <TextArea layoutX="389.0" layoutY="127.0" prefHeight="343.0" prefWidth="352.0" />
+      <TextArea editable="false" layoutX="32.0" layoutY="124.0" prefHeight="206.0" prefWidth="270.0" />
+      <TextArea fx:id="lastWorkoutTextArea" editable="false" layoutX="389.0" layoutY="127.0" prefHeight="343.0" prefWidth="352.0" />
    </children>
 </AnchorPane>

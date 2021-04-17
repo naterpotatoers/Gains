@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
@@ -14,27 +16,38 @@ import javafx.util.converter.LocalDateTimeStringConverter;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+
+/**
+ * 
+ * @author Anthony Tran, Andrilalaina Obeda Velonjatovo, Benjamin Seang, Nathanael Garza			
+ *
+ * Controller class for the program
+ *
+ */
+
 
 public class Controller {
     @FXML
     private TextField exerciseNameLabel;
     @FXML
-    private TextField numberOfRepsLabel;
-    @FXML
     private TextField numberOfSetsLabel;
-    @FXML
-    private TextField difficultyLevelLabel;
     @FXML
     private TextField avgSetDurationLabel;
     @FXML
-    private TextField dateLabel;
-
+    private TextField numberOfRepsLabel;
+    @FXML
+    private TextField difficultyLevelLabel;
+    @FXML
+    private DatePicker myDatePicker;
+    
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-    //
+    
+   
+    //switch to AddWorkout page 
     public void switchToAddWorkout(ActionEvent event) throws IOException
     {
         root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
@@ -44,6 +57,7 @@ public class Controller {
         stage.show();
     }
 
+    //switch to Homepage 
     public void switchToHomepage(ActionEvent event) throws IOException
     {
         root = FXMLLoader.load(getClass().getResource("Homepage.fxml"));
@@ -53,42 +67,28 @@ public class Controller {
         stage.show();
     }
 
-
+    //grab user's input from AddWorkout page
     public void grabFormData(ActionEvent e){
         String exerciseName = exerciseNameLabel.getText();
         String numberOfReps = numberOfRepsLabel.getText();
         String numberOfSets = numberOfSetsLabel.getText();
         String difficultyLevel = difficultyLevelLabel.getText();
         String avgSetDuration = avgSetDurationLabel.getText();
-        String date = dateLabel.getText();
+        String date = myDatePicker.getValue().toString();
 
-        String data = exerciseName + numberOfReps + numberOfSets + difficultyLevel + avgSetDuration + date;
-
-        System.out.println(exerciseName);
-        System.out.println(numberOfReps);
-        System.out.println(numberOfSets);
-        System.out.println(difficultyLevel);
-        System.out.println(avgSetDuration);
-        System.out.println(date);
-
-        saveToFile(data);
-
+        //build a string that is being saved to the save file
+        String data =  	date
+        				+ " " + exerciseName
+        				+ " " + numberOfSets
+        				+ " " + numberOfReps
+        				+ " " + avgSetDuration
+        				+ " " + difficultyLevel;
+        
+        //save user's input to a txt file
+        utility.saveToFile(data);
     }
-
-    private void saveToFile(String data){
-        try{
-            // Create file
-            FileWriter fstream = new FileWriter("out.txt", true);
-            BufferedWriter out = new BufferedWriter(fstream);
-
-            out.append(data + "\n");
-
-
-            //Close the output stream
-            out.close();
-        }catch (Exception exception){//Catch exception if any
-            System.err.println("Error: " + exception.getMessage());
-        }
-    }
+    
+    
+    
 
 }
