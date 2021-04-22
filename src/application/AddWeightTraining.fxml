@@ -16,14 +16,18 @@
         </Label>
         <Label fx:id="labelRecommendations" layoutX="398.0" layoutY="131.0" prefHeight="26.0" prefWidth="122.0" text="Exercise Name" textAlignment="CENTER" />
         <Label fx:id="labelWorkout" layoutX="26.0" layoutY="131.0" prefHeight="26.0" prefWidth="104.0" text="Date" />
-        <Button fx:id="buttonViewHistory" layoutX="552.0" layoutY="426.0" mnemonicParsing="false" onAction="#submitAndSaveCardio" prefHeight="26.0" prefWidth="122.0" text="Submit &amp; Save" />
-      <Label layoutX="26.0" layoutY="203.0" prefHeight="18.0" prefWidth="150.0" text="Duration" />
-      <Label layoutX="398.0" layoutY="204.0" prefHeight="18.0" prefWidth="83.0" text="Difficulty Level" />
+        <Button fx:id="buttonViewHistory" layoutX="552.0" layoutY="426.0" mnemonicParsing="false" onAction="#submitAndSaveWeightTraining" prefHeight="26.0" prefWidth="122.0" text="Submit &amp; Save" />
+      <Label layoutX="26.0" layoutY="243.0" prefHeight="18.0" prefWidth="150.0" text="Average Set Duration" />
+      <Label layoutX="398.0" layoutY="243.0" prefHeight="18.0" prefWidth="83.0" text="Difficulty Level" />
+      <Label layoutX="26.0" layoutY="186.0" prefHeight="18.0" prefWidth="150.0" text="Number of Sets" />
+      <Label layoutX="398.0" layoutY="187.0" prefHeight="18.0" prefWidth="122.0" text="Number of Reps" />
       <TextField fx:id="exerciseNameLabel" layoutX="525.0" layoutY="131.0" />
-      <TextField fx:id="difficultyLevelLabel" layoutX="525.0" layoutY="200.0" promptText="scale from 1-10" />
-      <TextField fx:id="durationLabel" layoutX="177.0" layoutY="200.0" promptText="unit in minutes" />
+      <TextField fx:id="numberOfRepsLabel" layoutX="525.0" layoutY="183.0" />
+      <TextField fx:id="numberOfSetsLabel" layoutX="177.0" layoutY="183.0" />
+      <TextField fx:id="difficultyLevelLabel" layoutX="525.0" layoutY="239.0" promptText="scale from 1-10" />
+      <TextField fx:id="avgSetDurationLabel" layoutX="178.0" layoutY="240.0" promptText="unit in minutes" />
       <Button layoutX="73.0" layoutY="427.0" mnemonicParsing="false" onAction="#switchToHomepage" text="Back to Home" />
       <DatePicker fx:id="myDatePicker" layoutX="177.0" layoutY="131.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="26.0" layoutY="74.0" text="Add Cardio" />
+      <Label layoutX="26.0" layoutY="74.0" text="Add Weight Training" />
     </children>
 </AnchorPane>

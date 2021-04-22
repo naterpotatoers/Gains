@@ -7,16 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.converter.LocalDateStringConverter;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * 
@@ -35,6 +29,8 @@ public class Controller {
     @FXML
     private TextField avgSetDurationLabel;
     @FXML
+    private TextField durationLabel;
+    @FXML
     private TextField numberOfRepsLabel;
     @FXML
     private TextField difficultyLevelLabel;
@@ -46,29 +42,40 @@ public class Controller {
     private Scene scene;
     private Parent root;
     
-   
-    //switch to AddWorkout page 
-    public void switchToAddWorkout(ActionEvent event) throws IOException
-    {
-        root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+    
+    // Switch to AddWorkout page 
+//    public void switchToAddWorkout(ActionEvent event) throws IOException
+//    {
+//    	switchToPage(event, "AddWorkout.fxml");
+//    }
 
-    //switch to Homepage 
+    // Switch to Homepage 
     public void switchToHomepage(ActionEvent event) throws IOException
     {
-        root = FXMLLoader.load(getClass().getResource("Homepage.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    	switchToPage(event, "Homepage.fxml");
+    }
+    
+    // Switch to Workout Type Select 
+    public void switchToWorkoutTypeSelect(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "WorkoutTypeSelect.fxml");
+    }
+    
+   // Switch to AddWeightTraining 
+    public void switchAddToWeightTraining(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "AddWeightTraining.fxml");
+    }
+    
+    // Switch to Cardio 
+    public void switchToAddCardio(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "AddCardio.fxml");
     }
 
-    //grab user's input from AddWorkout page
-    public void grabFormData(ActionEvent e){
+    // Grab and save user's input from Add Weight Training page
+    public void submitAndSaveWeightTraining(ActionEvent e)
+    {
         String exerciseName = exerciseNameLabel.getText();
         String numberOfReps = numberOfRepsLabel.getText();
         String numberOfSets = numberOfSetsLabel.getText();
@@ -76,19 +83,41 @@ public class Controller {
         String avgSetDuration = avgSetDurationLabel.getText();
         String date = myDatePicker.getValue().toString();
 
-        //build a string that is being saved to the save file
+        // Build a string that is being saved to the save file
         String data =  	date
         				+ " " + exerciseName
         				+ " " + numberOfSets
         				+ " " + numberOfReps
         				+ " " + avgSetDuration
         				+ " " + difficultyLevel;
-        
-        //save user's input to a txt file
-        utility.saveToFile(data);
+        // Save user's input
+        utility.saveWorkoutToFile(data);
     }
     
-    
-    
+    // Grab user's input from Add Cardio page
+    public void submitAndSaveCardio(ActionEvent e)
+    {
+        String exerciseName = exerciseNameLabel.getText();
+        String difficultyLevel = difficultyLevelLabel.getText();
+        String duration = durationLabel.getText();
+        String date = myDatePicker.getValue().toString();
 
+        // Build a string that is being saved to the save file
+        String data =  	date
+        				+ " " + exerciseName
+        				+ " " + duration
+        				+ " " + difficultyLevel;
+        
+        // Save user's input to a txt file
+        utility.saveWorkoutToFile(data);
+    }
+    
+    private void switchToPage(ActionEvent event, String targetPage) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getResource(targetPage));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

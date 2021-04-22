@@ -15,7 +15,7 @@
       </Label>
       <Label fx:id="labelRecommendations" layoutX="32.0" layoutY="91.0" prefHeight="26.0" prefWidth="270.0" text="Recommendations" textAlignment="CENTER" />
       <Label fx:id="labelWorkout" layoutX="389.0" layoutY="91.0" prefHeight="26.0" prefWidth="352.0" text="Last Workout" />
-      <Button fx:id="buttonAddWorkout" layoutX="99.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToAddWorkout" prefHeight="26.0" prefWidth="121.0" text="Add Workout" />
+      <Button fx:id="buttonAddWorkout" layoutX="99.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToWorkoutTypeSelect" prefHeight="26.0" prefWidth="121.0" text="Add Workout" />
       <Button fx:id="buttonViewHistory" layoutX="99.0" layoutY="427.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" text="View History" />
       <TextArea editable="false" layoutX="32.0" layoutY="124.0" prefHeight="206.0" prefWidth="270.0" />
       <TextArea fx:id="lastWorkoutTextArea" editable="false" layoutX="389.0" layoutY="127.0" prefHeight="343.0" prefWidth="352.0" />
