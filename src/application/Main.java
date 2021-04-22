@@ -1,5 +1,7 @@
 package application;
 
+import java.sql.Date;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -20,7 +22,10 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		utility.getConnection();
+//		utility.getConnection();
+//		Date date = new Date(2021-04-22);
+//		WeightTraining test = new WeightTraining(10, "nate", "brench press", "medium", 30, date, 25, 3, 12);
+//		System.out.println(test);
 		launch(args);
 	}
 }
