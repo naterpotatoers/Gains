@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  */
 
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
     @FXML
     private TextField exerciseNameLabel;
     @FXML
@@ -38,25 +38,30 @@ public class Controller implements Initializable{
     @FXML
     private TextField numberOfRepsLabel;
     @FXML
-    private TextField difficultyLevelLabel;
-    @FXML
     private TextField amountOfWeightLabel;
+    @FXML
+    private TextField difficultyLevelLabel;
     @FXML
     private DatePicker myDatePicker;
     @FXML
     private TextArea lastWorkoutTextArea;
+    @FXML 
+    private TextArea WorkoutTipTextArea;
+    
 
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private WorkoutController workout = new WorkoutController();
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
     	displayLastWorkout();
-		
+    	displayTip();
+
 	}
-    
+
     //display last workout
     public void displayLastWorkout()
     {
@@ -65,7 +70,15 @@ public class Controller implements Initializable{
     		lastWorkoutTextArea.setText("Hello");
     	}
     }
-   
+    
+    //display a random tip
+    public void displayTip()
+    {
+    	if(WorkoutTipTextArea != null)
+    	{
+    		WorkoutTipTextArea.setText(WorkoutTips.getTip());
+    	}
+    }
 
     // Switch to Homepage 
     public void switchToHomepage(ActionEvent event) throws IOException
@@ -90,6 +103,14 @@ public class Controller implements Initializable{
     {
     	switchToPage(event, "AddCardio.fxml");
     }
+    
+    public void saveWeightExercise(ActionEvent e) {
+
+    }
+    
+    public void saveCardioExercise(ActionEvent e) {
+    	
+    }
 
     // Grab and save user's input from Add Weight Training page
     public void submitAndSaveWeightTraining(ActionEvent e)
@@ -100,22 +121,26 @@ public class Controller implements Initializable{
         String difficultyLevel = difficultyLevelLabel.getText();
         String avgSetDuration = avgSetDurationLabel.getText();
         String amountOfWeight = amountOfWeightLabel.getText();
-        String date = myDatePicker.getValue().toString();
-
-        // Build a string that is being saved to the save file
-        String data =  	date
-        				+ " " + exerciseName
-        				+ " " + amountOfWeight
-        				+ " " + numberOfSets
-        				+ " " + numberOfReps
-        				+ " " + avgSetDuration
-        				+ " " + difficultyLevel;
-        // Save user's input
-        utility.saveWorkoutToFile(data);
+        String date = myDatePicker.getValue().toString(); // LocalDate or String
+        int sets = Integer.parseInt(numberOfSets);
+        int reps = Integer.parseInt(numberOfReps);
+        int weight = Integer.parseInt(amountOfWeight);
+        Date dateDate = new Date(2021-04-22); // Need it to be SQL Date
+        WeightTraining entry = new WeightTraining("nate", exerciseName, difficultyLevel, avgSetDuration, dateDate, weight, sets, reps);
+        workout.addWeightsExercise(entry);
+        // // Build a string that is being saved to the save file
+        // String data =  	date
+        // 				+ " " + exerciseName
+        // 				+ " " + numberOfSets
+        // 				+ " " + numberOfReps
+        // 				+ " " + avgSetDuration
+        // 				+ " " + difficultyLevel;
+        // // Save user's input
+        // utility.saveWorkoutToFile(data);
     }
     
     // Grab user's input from Add Cardio page
-    private void submitAndSaveCardio(ActionEvent e)
+    public void submitAndSaveCardio(ActionEvent e)
     {
         String exerciseName = exerciseNameLabel.getText();
         String difficultyLevel = difficultyLevelLabel.getText();
@@ -140,6 +165,4 @@ public class Controller implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
-
-	
 }
