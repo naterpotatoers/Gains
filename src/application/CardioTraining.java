@@ -5,7 +5,7 @@ import java.sql.Date;
 public class CardioTraining extends Exercise {
 	
 	public CardioTraining(String username, String workoutName, String difficulty,
-			int duration, Date workoutDate) {
+			String duration, Date workoutDate) {
 		setUsername(username);
 		setWorkoutName(workoutName);
 		setDifficulty(difficulty);
@@ -14,7 +14,7 @@ public class CardioTraining extends Exercise {
 	}
 	
 	public CardioTraining(int id, String username, String workoutName, String difficulty, 
-			int duration, Date workoutDate) {
+			String duration, Date workoutDate) {
 		setId(id);
 		setUsername(username);
 		setWorkoutName(workoutName);

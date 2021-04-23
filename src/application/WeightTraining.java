@@ -1,6 +1,7 @@
 package application;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class WeightTraining extends Exercise {
 	private int weight;
@@ -11,12 +12,12 @@ public class WeightTraining extends Exercise {
 	 * Create a WeightTraining object from user input. 
 	 */
 	WeightTraining(String username, String workoutName, String difficulty,
-			int duration, Date workoutDate, int weight, int sets, int reps){
+			String avgSetDuration, Date date, int weight, int sets, int reps){
 		setUsername(username);
 		setWorkoutName(workoutName);
 		setDifficulty(difficulty);
-		setDuration(duration);
-		setWorkoutDate(workoutDate);
+		setDuration(avgSetDuration);
+		setWorkoutDate(date);
 		setWeight(weight);
 		setSets(sets);
 		setReps(reps);
@@ -26,7 +27,7 @@ public class WeightTraining extends Exercise {
 	 * @param id the primary key automatically assigned by database
 	 */
 	WeightTraining(int id, String username, String workoutName, String difficulty, 
-			int duration, Date workoutDate, int weight, int sets, int reps){
+			String duration, Date workoutDate, int weight, int sets, int reps){
 		setId(id);
 		setUsername(username);
 		setWorkoutName(workoutName);

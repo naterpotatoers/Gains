@@ -47,13 +47,13 @@ public abstract class Exercise {
 	}
 	
 	/** @return the duration */
-	public int getDuration() {
+	public String getDuration() {
 		return duration;
 	}
 	
-	/** @param duration the duration to set */
-	public void setDuration(int duration) {
-		this.duration = duration;
+	/** @param avgSetDuration the duration to set */
+	public void setDuration(String avgSetDuration) {
+		this.duration = avgSetDuration;
 	}
 	
 	/** @return the workoutDate */
@@ -67,7 +67,7 @@ public abstract class Exercise {
 	}
 	
 	protected int id;
-	private int duration;
+	private String duration;
 	private String username;
 	private String workoutName;
 	private String difficulty;		

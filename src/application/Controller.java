@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * 
@@ -42,6 +42,7 @@ public class Controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private WorkoutController workout = new WorkoutController();
     
     
     // Switch to AddWorkout page 
@@ -73,6 +74,14 @@ public class Controller {
     {
     	switchToPage(event, "AddCardio.fxml");
     }
+    
+    public void saveWeightExercise(ActionEvent e) {
+
+    }
+    
+    public void saveCardioExercise(ActionEvent e) {
+    	
+    }
 
     // Grab and save user's input from Add Weight Training page
     public void submitAndSaveWeightTraining(ActionEvent e)
@@ -83,7 +92,11 @@ public class Controller {
         String difficultyLevel = difficultyLevelLabel.getText();
         String avgSetDuration = avgSetDurationLabel.getText();
         String date = myDatePicker.getValue().toString();
-
+        int sets = Integer.parseInt(numberOfSets);
+        int reps = Integer.parseInt(numberOfReps);
+        Date dateDate = new Date(2021-04-22);
+        WeightTraining entry = new WeightTraining("nate", exerciseName, difficultyLevel, avgSetDuration, dateDate, 25, sets, reps);
+        workout.addWeightsExercise(entry);
         // Build a string that is being saved to the save file
         String data =  	date
         				+ " " + exerciseName
