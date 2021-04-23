@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -52,21 +54,27 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+//    private WorkoutController workout;
     private WorkoutController workout = new WorkoutController();
+    private ArrayList<WeightTraining> weightExercises = new ArrayList<WeightTraining>();
+    private ArrayList<CardioTraining> cardioExercises = new ArrayList<CardioTraining>();
+    private String username = "nate";
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
     	displayLastWorkout();
-
 	}
 
     //display last workout
     public void displayLastWorkout()
     {
     	if(lastWorkoutTextArea != null)
-    	{
-    		lastWorkoutTextArea.setText("Hello");
+    	{    
+//    		workout = new WorkoutController();
+        	weightExercises = workout.getAllWeightWorkouts();
+        	cardioExercises = workout.getAllCardioWorkouts();
+    		// Need to make it look pretty, might want to look into using CSS
+    		lastWorkoutTextArea.setText("Weight Workout:\n" + weightExercises.get(0).toString() + "\n\nCardio Workout:\n" + cardioExercises.get(0).toString());
     	}
     }
 
@@ -93,14 +101,6 @@ public class Controller implements Initializable {
     {
     	switchToPage(event, "AddCardio.fxml");
     }
-    
-    public void saveWeightExercise(ActionEvent e) {
-
-    }
-    
-    public void saveCardioExercise(ActionEvent e) {
-    	
-    }
 
     // Grab and save user's input from Add Weight Training page
     public void submitAndSaveWeightTraining(ActionEvent e)
@@ -111,13 +111,15 @@ public class Controller implements Initializable {
         String difficultyLevel = difficultyLevelLabel.getText();
         String avgSetDuration = avgSetDurationLabel.getText();
         String amountOfWeight = amountOfWeightLabel.getText();
-        String date = myDatePicker.getValue().toString(); // LocalDate or String
+        LocalDate localDate = myDatePicker.getValue();
+        // Convert data types
         int sets = Integer.parseInt(numberOfSets);
         int reps = Integer.parseInt(numberOfReps);
         int weight = Integer.parseInt(amountOfWeight);
-        Date dateDate = new Date(2021-04-22); // Need it to be SQL Date
-        WeightTraining entry = new WeightTraining("nate", exerciseName, difficultyLevel, avgSetDuration, dateDate, weight, sets, reps);
-        workout.addWeightsExercise(entry);
+        Date date = java.sql.Date.valueOf(localDate);
+        
+        WeightTraining entry = new WeightTraining(username, exerciseName, difficultyLevel, avgSetDuration, date, weight, sets, reps);
+        workout.addWeightExercise(entry);
     }
     
     // Grab user's input from Add Cardio page
@@ -126,9 +128,11 @@ public class Controller implements Initializable {
         String exerciseName = exerciseNameLabel.getText();
         String difficultyLevel = difficultyLevelLabel.getText();
         String duration = durationLabel.getText();
-        String date = myDatePicker.getValue().toString(); // LocalDate or String
-        Date dateDate = new Date(2021-04-22); // Need it to be SQL Date
-        CardioTraining entry = new CardioTraining("nate", exerciseName, difficultyLevel, duration, dateDate);
+        LocalDate localDate = myDatePicker.getValue();
+        // Convert data types
+        Date date = java.sql.Date.valueOf(localDate);
+        
+        CardioTraining entry = new CardioTraining(username, exerciseName, difficultyLevel, duration, date);
         workout.addCardioExercise(entry);
     }
     
