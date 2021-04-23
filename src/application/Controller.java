@@ -14,8 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -117,15 +118,6 @@ public class Controller implements Initializable {
         Date dateDate = new Date(2021-04-22); // Need it to be SQL Date
         WeightTraining entry = new WeightTraining("nate", exerciseName, difficultyLevel, avgSetDuration, dateDate, weight, sets, reps);
         workout.addWeightsExercise(entry);
-        // // Build a string that is being saved to the save file
-        // String data =  	date
-        // 				+ " " + exerciseName
-        // 				+ " " + numberOfSets
-        // 				+ " " + numberOfReps
-        // 				+ " " + avgSetDuration
-        // 				+ " " + difficultyLevel;
-        // // Save user's input
-        // utility.saveWorkoutToFile(data);
     }
     
     // Grab user's input from Add Cardio page
@@ -134,16 +126,10 @@ public class Controller implements Initializable {
         String exerciseName = exerciseNameLabel.getText();
         String difficultyLevel = difficultyLevelLabel.getText();
         String duration = durationLabel.getText();
-        String date = myDatePicker.getValue().toString();
-
-        // Build a string that is being saved to the save file
-        String data =  	date
-        				+ " " + exerciseName
-        				+ " " + duration
-        				+ " " + difficultyLevel;
-        
-        // Save user's input to a txt file
-        utility.saveWorkoutToFile(data);
+        String date = myDatePicker.getValue().toString(); // LocalDate or String
+        Date dateDate = new Date(2021-04-22); // Need it to be SQL Date
+        CardioTraining entry = new CardioTraining("nate", exerciseName, difficultyLevel, duration, dateDate);
+        workout.addCardioExercise(entry);
     }
     
     private void switchToPage(ActionEvent event, String targetPage) throws IOException

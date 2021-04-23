@@ -30,7 +30,7 @@ public class WorkoutController {
 	
 	public void addCardioExercise(CardioTraining exercise) {
 		System.out.println("Adding cardio exercise to database...");
-		String sql = "INSERT INTO cardio (username, workoutName, difficulty, duration workoutDate) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO cardio (username, workoutName, difficulty, duration, workoutDate) VALUES (?,?,?,?,?)";
 		try (PreparedStatement statement = database.connectDatabase().prepareStatement(sql)) {
 			statement.setString(1, exercise.getUsername());
 			statement.setString(2, exercise.getWorkoutName());
