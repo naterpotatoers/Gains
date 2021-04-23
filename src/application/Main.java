@@ -1,6 +1,6 @@
 package application;
 
-import java.sql.Date;
+import java.sql.SQLException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,11 +21,10 @@ public class Main extends Application {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 //		utility.getConnection();
-//		Date date = new Date(2021-04-22);
-//		WeightTraining test = new WeightTraining(10, "nate", "brench press", "medium", 30, date, 25, 3, 12);
-//		System.out.println(test);
+//		WorkoutController workouts = new WorkoutController();
+//		workouts.getWorkouts("workout");
 		launch(args);
 	}
 }

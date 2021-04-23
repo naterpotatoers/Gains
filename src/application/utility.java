@@ -26,6 +26,7 @@ public class utility {
     	try (Connection connection = DriverManager.getConnection("jdbc:mysql://" + host + database, databaseUsername, databasePassword)) {
     		if (connection != null) {
     			System.out.println("Connected to the database!");
+    			
     			String sql = "Select * from workout";
     			Statement statement = connection.createStatement();
     			ResultSet result = statement.executeQuery(sql);
@@ -39,11 +40,11 @@ public class utility {
     				int weight = result.getInt("weight");
     				int sets = result.getInt("sets");
     				int reps = result.getInt("reps");
-    				
     				System.out.printf("id(primary key): %d username: %s workoutName: %s difficulty: %s duration: %d workoutDate: %s weight: %d sets: %d reps: %d \n", 
     						id, username, workoutName, difficulty, duration, workoutDate, weight, sets, reps);
     			}
     			result.close();
+    			
     			connection.close();
     		} else {
     			System.out.println("Failed to make connection!");
