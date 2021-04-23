@@ -3,15 +3,20 @@ package application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.net.URL;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 /**
  * 
@@ -22,7 +27,7 @@ import java.sql.Date;
  */
 
 
-public class Controller {
+public class Controller implements Initializable {
     @FXML
     private TextField exerciseNameLabel;
     @FXML
@@ -34,9 +39,13 @@ public class Controller {
     @FXML
     private TextField numberOfRepsLabel;
     @FXML
+    private TextField amountOfWeightLabel;
+    @FXML
     private TextField difficultyLevelLabel;
     @FXML
     private DatePicker myDatePicker;
+    @FXML
+    private TextArea lastWorkoutTextArea;
     
 
     private Stage stage;
@@ -44,12 +53,21 @@ public class Controller {
     private Parent root;
     private WorkoutController workout = new WorkoutController();
     
-    
-    // Switch to AddWorkout page 
-//    public void switchToAddWorkout(ActionEvent event) throws IOException
-//    {
-//    	switchToPage(event, "AddWorkout.fxml");
-//    }
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+
+    	displayLastWorkout();
+
+	}
+
+    //display last workout
+    public void displayLastWorkout()
+    {
+    	if(lastWorkoutTextArea != null)
+    	{
+    		lastWorkoutTextArea.setText("Hello");
+    	}
+    }
 
     // Switch to Homepage 
     public void switchToHomepage(ActionEvent event) throws IOException
@@ -91,21 +109,23 @@ public class Controller {
         String numberOfSets = numberOfSetsLabel.getText();
         String difficultyLevel = difficultyLevelLabel.getText();
         String avgSetDuration = avgSetDurationLabel.getText();
-        String date = myDatePicker.getValue().toString();
+        String amountOfWeight = amountOfWeightLabel.getText();
+        String date = myDatePicker.getValue().toString(); // LocalDate or String
         int sets = Integer.parseInt(numberOfSets);
         int reps = Integer.parseInt(numberOfReps);
-        Date dateDate = new Date(2021-04-22);
-        WeightTraining entry = new WeightTraining("nate", exerciseName, difficultyLevel, avgSetDuration, dateDate, 25, sets, reps);
+        int weight = Integer.parseInt(amountOfWeight);
+        Date dateDate = new Date(2021-04-22); // Need it to be SQL Date
+        WeightTraining entry = new WeightTraining("nate", exerciseName, difficultyLevel, avgSetDuration, dateDate, weight, sets, reps);
         workout.addWeightsExercise(entry);
-        // Build a string that is being saved to the save file
-        String data =  	date
-        				+ " " + exerciseName
-        				+ " " + numberOfSets
-        				+ " " + numberOfReps
-        				+ " " + avgSetDuration
-        				+ " " + difficultyLevel;
-        // Save user's input
-        utility.saveWorkoutToFile(data);
+        // // Build a string that is being saved to the save file
+        // String data =  	date
+        // 				+ " " + exerciseName
+        // 				+ " " + numberOfSets
+        // 				+ " " + numberOfReps
+        // 				+ " " + avgSetDuration
+        // 				+ " " + difficultyLevel;
+        // // Save user's input
+        // utility.saveWorkoutToFile(data);
     }
     
     // Grab user's input from Add Cardio page
