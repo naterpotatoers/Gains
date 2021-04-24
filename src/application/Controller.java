@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.time.LocalDate;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 
 /**
  * 
@@ -45,6 +48,8 @@ public class Controller implements Initializable {
     private TextField amountOfWeightLabel;
     @FXML
     private TextField difficultyLevelLabel;
+    @FXML
+    private TextField difficultyLevelLabel2;
     @FXML
     private DatePicker myDatePicker;
     @FXML
@@ -94,6 +99,7 @@ public class Controller implements Initializable {
     public void switchAddToWeightTraining(ActionEvent event) throws IOException
     {
     	switchToPage(event, "AddWeightTraining.fxml");
+
     }
     
     // Switch to Cardio 
@@ -126,7 +132,7 @@ public class Controller implements Initializable {
     }
     
     // Grab user's input from Add Cardio page
-    public void submitAndSaveCardio(ActionEvent e)
+    public void submitAndSaveCardio(ActionEvent e) throws IOException
     {
         String exerciseName = exerciseNameLabel.getText();
         String difficultyLevel = difficultyLevelLabel.getText();
@@ -137,6 +143,9 @@ public class Controller implements Initializable {
         
         CardioTraining entry = new CardioTraining(username, exerciseName, difficultyLevel, duration, date);
         workout.addCardioExercise(entry);
+        
+        //Swaps back to the home page after hitting the submit button
+        switchToPage(e, "Homepage.fxml");
     }
     
     private void switchToPage(ActionEvent event, String targetPage) throws IOException
@@ -146,5 +155,50 @@ public class Controller implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void numberFormatter(KeyEvent event) {
+    	numberOfSetsLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+            	numberOfSetsLabel.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    	
+    	avgSetDurationLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+            	avgSetDurationLabel.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    	
+    	amountOfWeightLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+            	amountOfWeightLabel.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    	
+    	numberOfRepsLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+            	numberOfRepsLabel.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    	
+    	difficultyLevelLabel.setTextFormatter(new TextFormatter<>(this::filter));
+    	
+    }
+    
+    public void numberFormatter2(KeyEvent event) { 
+    	durationLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+            	durationLabel.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    	difficultyLevelLabel2.setTextFormatter(new TextFormatter<>(this::filter));
+    }
+    
+    private TextFormatter.Change filter(TextFormatter.Change change) {
+        if (!change.getControlNewText().matches("([1-9]|1[0-0])")) {
+            change.setText("");
+        }
+        return change;
     }
 }
