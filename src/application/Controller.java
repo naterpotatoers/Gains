@@ -103,7 +103,7 @@ public class Controller implements Initializable {
     }
 
     // Grab and save user's input from Add Weight Training page
-    public void submitAndSaveWeightTraining(ActionEvent e)
+    public void submitAndSaveWeightTraining(ActionEvent e) throws IOException
     {
         String exerciseName = exerciseNameLabel.getText();
         String numberOfReps = numberOfRepsLabel.getText();
@@ -120,6 +120,9 @@ public class Controller implements Initializable {
         
         WeightTraining entry = new WeightTraining(username, exerciseName, difficultyLevel, avgSetDuration, date, weight, sets, reps);
         workout.addWeightExercise(entry);
+        
+        //Swaps back to the home page after hitting the submit button
+        switchToPage(e, "Homepage.fxml");
     }
     
     // Grab user's input from Add Cardio page
