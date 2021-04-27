@@ -47,18 +47,6 @@ public class MySQLDatabase implements Database {
 		System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 	}
 	
-	// TODO: Might be able to remove this since I don't think it is being used anymore
-	public ResultSet queryStatement(String sql) {
-		try (Connection connection = connectDatabase()) {
-			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery(sql);
-			return result;
-		} catch (SQLException e) {
-			sqlExceptionError(e);
-		}
-		return null;
-	}
-	
 	/**
 	 * Queries database and returns results as ArrayList
 	 * @param sql statement String

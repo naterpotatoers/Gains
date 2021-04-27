@@ -10,47 +10,48 @@ import java.io.IOException;
 public class UserFile {
 	private String fileName = "username.txt";
 	private int numberOfCharacters = 99;
+	private String username = "";
 	
 	public UserFile() {
-			if(!usernameExists()) {
-				String username = createRandomUsername();
-				saveUsername(username);
-			}
-	}
-	
-	public Boolean usernameExists()  {
-		String username = readUsernameFile();
-		if(username.isEmpty()) {
-			return false;
-		}
-		return true;
+		checkUsername();
 	}
     
-    public String readUsernameFile() {
-  		String username = "";
-		BufferedReader in;
+    public String getUsername() {
 		try {
-			in = new BufferedReader(new FileReader(fileName));
+			BufferedReader in = new BufferedReader(new FileReader(fileName));
 			username = in.readLine();
 			in.close();
 			return username;
 		} catch (IOException e) {
+			System.out.println("Cannot find username.txt file!");
 			e.printStackTrace();
 		}
 		return username;
     }
+
+	private void checkUsername()  {
+		try {
+			if(getUsername().isEmpty()) {
+				System.out.println("Creating username.txt with random username...");
+				String username = createUsername();
+				setUsername(username);
+				System.out.println("Created username.txt with username " + username);
+			}
+		} catch (Exception e) {
+			System.out.println("username.txt not set!");
+		}
+	}
     
-	public String createRandomUsername() {
-        String name = "";
+	private String createUsername() {
         for (int i = 0; i < numberOfCharacters; i++) {
             int v = 1 + (int) (Math.random() * 26);
             char c = (char) (v + (i == 0 ? 'A' : 'a') - 1);
-            name += c;
+            username += c;
         }
-        return name;
+        return username;
 	}
 	
-    private void saveUsername(String data){
+    private void setUsername(String data){
         try{
             FileWriter fstream = new FileWriter(fileName, false);
             BufferedWriter out = new BufferedWriter(fstream);

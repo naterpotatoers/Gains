@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 import application.Models.CardioTraining;
 import application.Models.WeightTraining;
+import application.Resources.UserFile;
 import application.Resources.WorkoutTips;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -94,7 +95,7 @@ public class Controller implements Initializable {
     private WorkoutController workout = new WorkoutController();
     private ArrayList<WeightTraining> weightExercises = new ArrayList<WeightTraining>();
     private ArrayList<CardioTraining> cardioExercises = new ArrayList<CardioTraining>();
-    private String username = "nate";
+    UserFile user = new UserFile();
     
     /** This function is called on every page load. Used for setting the text from database. */
     @Override
@@ -109,7 +110,8 @@ public class Controller implements Initializable {
     /** Populates WeightHistory.fxml page with weight data */
     public void displayWeightHistory() {
         if (weightHistoryTable != null){
-            weightExercises = workout.getAllWeightWorkouts();
+        	String username = user.getUsername();
+            weightExercises = workout.getAllWeightWorkouts(username);
             ObservableList<WeightTraining> weightWorkouts = FXCollections.observableArrayList(weightExercises);
             weightHistoryDateColumn.setCellValueFactory(new PropertyValueFactory<>("workoutDate"));
             weightHistoryExerciseNameColumn.setCellValueFactory(new PropertyValueFactory<>("workoutName"));
@@ -125,7 +127,8 @@ public class Controller implements Initializable {
 	/** Populates CardioHistory.fxml page with cardio data */
 	public void displayCardioHistory(){
         if (cardioHistoryTable != null){
-            cardioExercises = workout.getAllCardioWorkouts();
+        	String username = user.getUsername();
+            cardioExercises = workout.getAllCardioWorkouts(username);
             ObservableList<CardioTraining> cardioWorkouts = FXCollections.observableArrayList(cardioExercises);
             cardioHistoryDateColumn.setCellValueFactory(new PropertyValueFactory<>("workoutDate"));
             cardioHistoryDurationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -140,8 +143,14 @@ public class Controller implements Initializable {
     {
     	if(lastWeightTrainingTextArea != null)
     	{    
-        	weightExercises = workout.getAllWeightWorkouts();
-        	lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
+//    		String username = user.getUsername();
+//        	weightExercises = workout.getAllWeightWorkouts(username);
+//        	if(weightExercises.isEmpty()) {
+//        		lastWeightTrainingTextArea.setText("No cardio data");
+//        	}
+//        	else {
+//        		lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
+//        	}
     	}
     }
     
@@ -150,8 +159,14 @@ public class Controller implements Initializable {
     {
     	if(lastCardioTextArea != null)
     	{    
-        	cardioExercises = workout.getAllCardioWorkouts();
-        	lastCardioTextArea.setText(cardioExercises.get(0).toString());
+//    		String username = user.getUsername();
+//        	cardioExercises = workout.getAllCardioWorkouts(username);
+//        	if(weightExercises.isEmpty()) {
+//        		lastCardioTextArea.setText("No weight data");
+//        	}
+//        	else {
+//        		lastCardioTextArea.setText(cardioExercises.get(0).toString());
+//        	}   	
     	}
     }
     
@@ -163,8 +178,50 @@ public class Controller implements Initializable {
     		WorkoutTipTextArea.setText(WorkoutTips.getTip());
     	}
     }
+
+    /** Grabs user's input from AddWeightTraining page and saves it to database */
+    public void submitAndSaveWeightTraining(ActionEvent e) throws IOException
+    {
+        String username = user.getUsername();
+        String exerciseName = exerciseNameLabel.getText();
+        String numberOfReps = numberOfRepsLabel.getText();
+        String numberOfSets = numberOfSetsLabel.getText();
+        String difficultyLevel = difficultyLevelLabel.getText();
+        String avgSetDuration = avgSetDurationLabel.getText();
+        String amountOfWeight = amountOfWeightLabel.getText();
+        LocalDate localDate = myDatePicker.getValue();
+        // Convert data types
+        int sets = Integer.parseInt(numberOfSets);
+        int reps = Integer.parseInt(numberOfReps);
+        int weight = Integer.parseInt(amountOfWeight);
+        Date date = java.sql.Date.valueOf(localDate);
+        
+        WeightTraining entry = new WeightTraining(username, exerciseName, difficultyLevel, avgSetDuration, date, weight, sets, reps);
+        workout.addWeightExercise(entry);
+        
+        // Returns back to the home page after hitting the submit button
+        switchToHomepage(e);
+    }
     
-    /**
+    /** Grabs user's input from AddCardio page and saves it to database */
+    public void submitAndSaveCardio(ActionEvent e) throws IOException
+    {
+        String username = user.getUsername();
+        String exerciseName = exerciseNameLabel.getText();
+        String difficultyLevel = difficultyLevelLabel2.getText();
+        String duration = durationLabel.getText();
+        LocalDate localDate = myDatePicker.getValue();
+        // Convert data types
+        Date date = java.sql.Date.valueOf(localDate);
+        
+        CardioTraining entry = new CardioTraining(username, exerciseName, difficultyLevel, duration, date);
+        workout.addCardioExercise(entry);
+        
+        // Returns back to the home page after hitting the submit button
+        switchToHomepage(e);
+    }
+
+        /**
      * Helper function for switching between fxml pages 
      * @param targetPage name of fxml page. Ex. AddCardio.fxml
      */
@@ -212,48 +269,6 @@ public class Controller implements Initializable {
     {
     	switchToPage(event, "Views/WeightHistory.fxml");
     }
-    
-
-    /** Grabs user's input from AddWeightTraining page and saves it to database */
-    public void submitAndSaveWeightTraining(ActionEvent e) throws IOException
-    {
-        String exerciseName = exerciseNameLabel.getText();
-        String numberOfReps = numberOfRepsLabel.getText();
-        String numberOfSets = numberOfSetsLabel.getText();
-        String difficultyLevel = difficultyLevelLabel.getText();
-        String avgSetDuration = avgSetDurationLabel.getText();
-        String amountOfWeight = amountOfWeightLabel.getText();
-        LocalDate localDate = myDatePicker.getValue();
-        // Convert data types
-        int sets = Integer.parseInt(numberOfSets);
-        int reps = Integer.parseInt(numberOfReps);
-        int weight = Integer.parseInt(amountOfWeight);
-        Date date = java.sql.Date.valueOf(localDate);
-        
-        WeightTraining entry = new WeightTraining(username, exerciseName, difficultyLevel, avgSetDuration, date, weight, sets, reps);
-        workout.addWeightExercise(entry);
-        
-        // Swaps back to the home page after hitting the submit button
-        switchToPage(e, "Views/Homepage.fxml"); // TODO: change this to use switchToHomepage()
-    }
-    
-    /** Grabs user's input from AddCardio page and saves it to database */
-    public void submitAndSaveCardio(ActionEvent e) throws IOException
-    {
-        String exerciseName = exerciseNameLabel.getText();
-        String difficultyLevel = difficultyLevelLabel2.getText();
-        String duration = durationLabel.getText();
-        LocalDate localDate = myDatePicker.getValue();
-        // Convert data types
-        Date date = java.sql.Date.valueOf(localDate);
-        
-        CardioTraining entry = new CardioTraining(username, exerciseName, difficultyLevel, duration, date);
-        workout.addCardioExercise(entry);
-        
-        //Swaps back to the home page after hitting the submit button
-        switchToPage(e, "Views/Homepage.fxml"); // TODO: change this to use switchToHomepage()
-    }
-    
     
     /** Validates user input such that only numbers can be entered into text fields */
     public void numberFormatter(KeyEvent event) {

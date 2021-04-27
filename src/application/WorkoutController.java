@@ -10,7 +10,7 @@ import application.Models.CardioTraining;
 import application.Models.WeightTraining;
 
 public class WorkoutController {
-	// TODO: Should move these to a config file that way they are easier to find/edit
+	// TODO: Not safe but oh well...
 	private String host = "cs151-gains-db.cjsjim1qtdlq.us-west-2.rds.amazonaws.com/";
 	private String dbName = "gains";
 	private String dbUsername = "root";
@@ -29,10 +29,10 @@ public class WorkoutController {
 	 * Grabs all weight exercises from table in descending order by date
 	 * @return ArrayList of weight exercises
 	 */
-	public ArrayList<WeightTraining> getAllWeightWorkouts() {
-		String dbTable = "workout";
+	public ArrayList<WeightTraining> getAllWeightWorkouts(String username) {
+		String dbTable = "weight";
 		System.out.println("Fetching data from " + dbTable +" table...");
-		String sql = "SELECT * FROM " + dbTable + " WHERE username = 'nate' ORDER BY workoutDate DESC";
+		String sql = "SELECT * FROM " + dbTable + " WHERE username = '" + username + "' ORDER BY workoutDate DESC";
 		ConnectToDatabase();
 		ArrayList<WeightTraining>weightExercises = database.queryWeightTable(sql);
 		return weightExercises;
@@ -42,10 +42,10 @@ public class WorkoutController {
 	 * Grabs all cardio exercises from table in descending order by date
 	 * @return ArrayList of cardio exercises
 	 */
-	public ArrayList<CardioTraining> getAllCardioWorkouts() {
+	public ArrayList<CardioTraining> getAllCardioWorkouts(String username) {
 		String dbTable = "cardio";
 		System.out.println("Fetching data from " + dbTable +" table...");
-		String sql = "SELECT * FROM " + dbTable + " WHERE username = 'nate' ORDER BY workoutDate DESC";
+		String sql = "SELECT * FROM " + dbTable + " WHERE username = '" + username + "' ORDER BY workoutDate DESC";
 		ConnectToDatabase();
 		ArrayList<CardioTraining>cardioExercises = database.queryCardioTable(sql);
 		return cardioExercises;
@@ -56,8 +56,9 @@ public class WorkoutController {
 	 * @param exercise WeightTraining object
 	 */
 	public void addWeightExercise(WeightTraining exercise) {
+		String dbTable = "weight";
 		System.out.print("Adding weights exercise to database... ");
-		String sql = "INSERT INTO workout (username, workoutName, difficulty, duration, workoutDate, weight, sets, reps) VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO " + dbTable + " (username, workoutName, difficulty, duration, workoutDate, weight, sets, reps) VALUES (?,?,?,?,?,?,?,?)";
 		ConnectToDatabase();
 		try (PreparedStatement statement = database.connectDatabase().prepareStatement(sql)) {
 			statement.setString(1, exercise.getUsername());
@@ -80,8 +81,9 @@ public class WorkoutController {
 	 * @param exercise CardioTraining object
 	 */
 	public void addCardioExercise(CardioTraining exercise) {
+		String dbTable = "cardio";
 		System.out.print("Adding cardio exercise to database... ");
-		String sql = "INSERT INTO cardio (username, workoutName, difficulty, duration, workoutDate) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO " + dbTable + " (username, workoutName, difficulty, duration, workoutDate) VALUES (?,?,?,?,?)";
 		ConnectToDatabase();
 		try (PreparedStatement statement = database.connectDatabase().prepareStatement(sql)) {
 			statement.setString(1, exercise.getUsername());
