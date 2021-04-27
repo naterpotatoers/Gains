@@ -14,6 +14,7 @@ public class MySQLDatabase implements Database {
 	private String dbUsername;
 	private String password;
 	
+	/* Initializes database variables */
 	MySQLDatabase(String host, String database, String username, String password){
 		this.host = host;
 		this.database = database;
@@ -33,7 +34,7 @@ public class MySQLDatabase implements Database {
 
 	@Override
 	public void closeDatabase() {
-		// Might want to remove
+		// TODO: Might want to remove since it serves no purpose here
 		System.out.println("Closing connection to " + this.host + " MySQL database...");
 	}
 
@@ -42,6 +43,7 @@ public class MySQLDatabase implements Database {
 		System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 	}
 	
+	// TODO: Might be able to remove this since I don't think it is being used anymore
 	public ResultSet queryStatement(String sql) {
 		try (Connection connection = connectDatabase()) {
 			Statement statement = connection.createStatement();

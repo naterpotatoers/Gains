@@ -1,3 +1,8 @@
+/**
+ * DEPRECATED - This file will be removed at some point. Used for initial prototyping.
+ * saveToFile() might be useful for saving the user's name / unique id to a txt file
+ */
+
 package application;
 
 import java.io.BufferedWriter;

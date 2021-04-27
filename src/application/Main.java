@@ -22,9 +22,6 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) throws SQLException {
-//		utility.getConnection();
-//		WorkoutController workouts = new WorkoutController();
-//		workouts.getWorkouts("workout");
 		launch(args);
 	}
 }

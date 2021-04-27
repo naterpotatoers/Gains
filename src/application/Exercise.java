@@ -3,7 +3,6 @@ package application;
 import java.sql.Date;
 
 public abstract class Exercise {
-	/** @return Nicely formatted string */
 	public abstract String toString();
 	
 	/** @return the id */ 

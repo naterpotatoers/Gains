@@ -1,7 +1,6 @@
 package application;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 public class WeightTraining extends Exercise {
 	private int weight;
@@ -42,17 +41,17 @@ public class WeightTraining extends Exercise {
 	@Override
 	public String toString() {
 		String data = 
-				"username: " + getUsername() + 
-				", workoutName: " + getWorkoutName() + 
-				", difficulty: " + getDifficulty() + 
-				", duration: " + getDuration() + 
-				", workoutDate: " + getWorkoutDate() + 
-				", weight: " + getWeight() + 
-				", sets: " + getSets() + 
-				", reps: " + getReps();
+				"Username: " + getUsername() +
+				"\nWorkoutDate: " + getWorkoutDate() + 
+				"\nWorkoutName: " + getWorkoutName() + 
+				"\nDifficulty: " + getDifficulty() + 
+				"\nDuration: " + getDuration() + 
+				"\nWeight: " + getWeight() + 
+				"\nSets: " + getSets() + 
+				"\nReps: " + getReps();
 		// Adds id value if it exists
 		if(getId() != 0) {
-			return 	"id: " + getId() + ", " + data;
+			return 	"ID: " + getId() + ", " + data;
 		}
 		return data;
 	}
