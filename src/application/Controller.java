@@ -161,7 +161,7 @@ public class Controller implements Initializable {
     	{    
     		String username = user.getUsername();
         	cardioExercises = workout.getAllCardioWorkouts(username);
-        	if(weightExercises.isEmpty()) {
+        	if(cardioExercises.isEmpty()) {
         		lastCardioTextArea.setText("No weight data");
         	}
         	else {
