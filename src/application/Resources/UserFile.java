@@ -27,7 +27,6 @@ public class UserFile {
 			return username;
 		} catch (IOException e) {
 			System.out.println("Cannot find username.txt file!");
-			e.printStackTrace();
 		}
 		return username;
     }
@@ -36,13 +35,16 @@ public class UserFile {
 	private void checkUsername()  {
 		try {
 			if(getUsername().isEmpty()) {
-				System.out.println("Creating username.txt with random username...");
+				System.out.println("Creating username.txt with a random username...");
 				String username = createUsername();
 				setUsername(username);
 				System.out.println("Created username.txt with username " + username);
 			}
 		} catch (Exception e) {
 			System.out.println("username.txt not set!");
+			String username = createUsername();
+			setUsername(username);
+			System.out.println("Created new username " + username);
 		}
 	}
     
