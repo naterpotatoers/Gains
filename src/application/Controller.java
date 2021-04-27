@@ -19,6 +19,11 @@ import java.time.LocalDate;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import application.Models.CardioTraining;
+import application.Models.WeightTraining;
+import application.Resources.UserFile;
+import application.Resources.WorkoutTips;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -87,10 +92,10 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private UserFile user = new UserFile();
     private WorkoutController workout = new WorkoutController();
     private ArrayList<WeightTraining> weightExercises = new ArrayList<WeightTraining>();
     private ArrayList<CardioTraining> cardioExercises = new ArrayList<CardioTraining>();
-    private String username = "nate";
     
     /** This function is called on every page load. Used for setting the text from database. */
     @Override
@@ -105,7 +110,8 @@ public class Controller implements Initializable {
     /** Populates WeightHistory.fxml page with weight data */
     public void displayWeightHistory() {
         if (weightHistoryTable != null){
-            weightExercises = workout.getAllWeightWorkouts();
+        	String username = user.getUsername();
+            weightExercises = workout.getAllWeightWorkouts(username);
             ObservableList<WeightTraining> weightWorkouts = FXCollections.observableArrayList(weightExercises);
             weightHistoryDateColumn.setCellValueFactory(new PropertyValueFactory<>("workoutDate"));
             weightHistoryExerciseNameColumn.setCellValueFactory(new PropertyValueFactory<>("workoutName"));
@@ -121,7 +127,8 @@ public class Controller implements Initializable {
 	/** Populates CardioHistory.fxml page with cardio data */
 	public void displayCardioHistory(){
         if (cardioHistoryTable != null){
-            cardioExercises = workout.getAllCardioWorkouts();
+        	String username = user.getUsername();
+            cardioExercises = workout.getAllCardioWorkouts(username);
             ObservableList<CardioTraining> cardioWorkouts = FXCollections.observableArrayList(cardioExercises);
             cardioHistoryDateColumn.setCellValueFactory(new PropertyValueFactory<>("workoutDate"));
             cardioHistoryDurationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -136,8 +143,14 @@ public class Controller implements Initializable {
     {
     	if(lastWeightTrainingTextArea != null)
     	{    
-        	weightExercises = workout.getAllWeightWorkouts();
-        	lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
+    		String username = user.getUsername();
+        	weightExercises = workout.getAllWeightWorkouts(username);
+        	if(weightExercises.isEmpty()) {
+        		lastWeightTrainingTextArea.setText("No cardio data");
+        	}
+        	else {
+        		lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
+        	}
     	}
     }
     
@@ -146,8 +159,14 @@ public class Controller implements Initializable {
     {
     	if(lastCardioTextArea != null)
     	{    
-        	cardioExercises = workout.getAllCardioWorkouts();
-        	lastCardioTextArea.setText(cardioExercises.get(0).toString());
+    		String username = user.getUsername();
+        	cardioExercises = workout.getAllCardioWorkouts(username);
+        	if(cardioExercises.isEmpty()) {
+        		lastCardioTextArea.setText("No weight data");
+        	}
+        	else {
+        		lastCardioTextArea.setText(cardioExercises.get(0).toString());
+        	}   	
     	}
     }
     
@@ -159,60 +178,11 @@ public class Controller implements Initializable {
     		WorkoutTipTextArea.setText(WorkoutTips.getTip());
     	}
     }
-    
-    /**
-     * Helper function for switching between fxml pages 
-     * @param targetPage name of fxml page. Ex. AddCardio.fxml
-     */
-    private void switchToPage(ActionEvent event, String targetPage) throws IOException
-    {
-        root = FXMLLoader.load(getClass().getResource(targetPage));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    // Page switching handlers
-    public void switchToHomepage(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "Homepage.fxml");
-    }
-    
-    public void switchToWorkoutTypeSelect(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "WorkoutTypeSelect.fxml");
-    }
-    
-    public void switchAddToWeightTraining(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "AddWeightTraining.fxml");
-    }
-    
-    public void switchToAddCardio(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "AddCardio.fxml");
-    }
-    
-    public void switchToHistoryTypeSelect(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "HistoryTypeSelect.fxml");
-    }
-    
-    public void switchToCardioHistory(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "CardioHistory.fxml");
-    }
-    
-    public void switchToWeightHistory(ActionEvent event) throws IOException
-    {
-    	switchToPage(event, "WeightHistory.fxml");
-    }
-    
 
     /** Grabs user's input from AddWeightTraining page and saves it to database */
     public void submitAndSaveWeightTraining(ActionEvent e) throws IOException
     {
+        String username = user.getUsername();
         String exerciseName = exerciseNameLabel.getText();
         String numberOfReps = numberOfRepsLabel.getText();
         String numberOfSets = numberOfSetsLabel.getText();
@@ -229,13 +199,14 @@ public class Controller implements Initializable {
         WeightTraining entry = new WeightTraining(username, exerciseName, difficultyLevel, avgSetDuration, date, weight, sets, reps);
         workout.addWeightExercise(entry);
         
-        // Swaps back to the home page after hitting the submit button
-        switchToPage(e, "Homepage.fxml"); // TODO: change this to use switchToHomepage()
+        // Returns back to the home page after hitting the submit button
+        switchToHomepage(e);
     }
     
     /** Grabs user's input from AddCardio page and saves it to database */
     public void submitAndSaveCardio(ActionEvent e) throws IOException
     {
+        String username = user.getUsername();
         String exerciseName = exerciseNameLabel.getText();
         String difficultyLevel = difficultyLevelLabel2.getText();
         String duration = durationLabel.getText();
@@ -246,10 +217,58 @@ public class Controller implements Initializable {
         CardioTraining entry = new CardioTraining(username, exerciseName, difficultyLevel, duration, date);
         workout.addCardioExercise(entry);
         
-        //Swaps back to the home page after hitting the submit button
-        switchToPage(e, "Homepage.fxml"); // TODO: change this to use switchToHomepage()
+        // Returns back to the home page after hitting the submit button
+        switchToHomepage(e);
+    }
+
+        /**
+     * Helper function for switching between fxml pages 
+     * @param targetPage name of fxml page. Ex. AddCardio.fxml
+     */
+    private void switchToPage(ActionEvent event, String targetPage) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getResource(targetPage));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    // Page switching handlers
+    public void switchToHomepage(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/Homepage.fxml");
     }
     
+    public void switchToWorkoutTypeSelect(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/WorkoutTypeSelect.fxml");
+    }
+    
+    public void switchAddToWeightTraining(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/AddWeightTraining.fxml");
+    }
+    
+    public void switchToAddCardio(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/AddCardio.fxml");
+    }
+    
+    public void switchToHistoryTypeSelect(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/HistoryTypeSelect.fxml");
+    }
+    
+    public void switchToCardioHistory(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/CardioHistory.fxml");
+    }
+    
+    public void switchToWeightHistory(ActionEvent event) throws IOException
+    {
+    	switchToPage(event, "Views/WeightHistory.fxml");
+    }
     
     /** Validates user input such that only numbers can be entered into text fields */
     public void numberFormatter(KeyEvent event) {

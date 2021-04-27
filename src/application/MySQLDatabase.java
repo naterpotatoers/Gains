@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import application.Models.CardioTraining;
+import application.Models.Database;
+import application.Models.WeightTraining;
+
 public class MySQLDatabase implements Database {
 	private String host;
 	private String database;
@@ -41,18 +45,6 @@ public class MySQLDatabase implements Database {
 	@Override
 	public void sqlExceptionError(SQLException e) {
 		System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-	}
-	
-	// TODO: Might be able to remove this since I don't think it is being used anymore
-	public ResultSet queryStatement(String sql) {
-		try (Connection connection = connectDatabase()) {
-			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery(sql);
-			return result;
-		} catch (SQLException e) {
-			sqlExceptionError(e);
-		}
-		return null;
 	}
 	
 	/**

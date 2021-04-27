@@ -1,4 +1,4 @@
-package application;
+package application.Models;
 
 import java.sql.Date;
 
@@ -10,7 +10,7 @@ public class WeightTraining extends Exercise {
 	/**
 	 * Create a WeightTraining object from user input. 
 	 */
-	WeightTraining(String username, String workoutName, String difficulty,
+	public WeightTraining(String username, String workoutName, String difficulty,
 			String avgSetDuration, Date date, int weight, int sets, int reps){
 		setUsername(username);
 		setWorkoutName(workoutName);
@@ -25,7 +25,7 @@ public class WeightTraining extends Exercise {
 	/** Creates WeightTraining objects from the database. The id will allow updating and deleting from database.
 	 * @param id the primary key automatically assigned by database
 	 */
-	WeightTraining(int id, String username, String workoutName, String difficulty, 
+	public WeightTraining(int id, String username, String workoutName, String difficulty, 
 			String duration, Date workoutDate, int weight, int sets, int reps){
 		setId(id);
 		setUsername(username);
