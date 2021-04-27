@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import application.Models.CardioTraining;
+import application.Models.WeightTraining;
+
 public class WorkoutController {
 	// TODO: Should move these to a config file that way they are easier to find/edit
 	private String host = "cs151-gains-db.cjsjim1qtdlq.us-west-2.rds.amazonaws.com/";

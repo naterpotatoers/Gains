@@ -1,4 +1,4 @@
-package application;
+package application.Resources;
 
 import java.util.Random;
 

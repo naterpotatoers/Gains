@@ -3,7 +3,7 @@
  * saveToFile() might be useful for saving the user's name / unique id to a txt file
  */
 
-package application;
+package application.Resources;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

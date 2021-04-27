@@ -19,6 +19,10 @@ import java.time.LocalDate;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import application.Models.CardioTraining;
+import application.Models.WeightTraining;
+import application.Resources.WorkoutTips;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -176,37 +180,37 @@ public class Controller implements Initializable {
     // Page switching handlers
     public void switchToHomepage(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "Homepage.fxml");
+    	switchToPage(event, "Views/Homepage.fxml");
     }
     
     public void switchToWorkoutTypeSelect(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "WorkoutTypeSelect.fxml");
+    	switchToPage(event, "Views/WorkoutTypeSelect.fxml");
     }
     
     public void switchAddToWeightTraining(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "AddWeightTraining.fxml");
+    	switchToPage(event, "Views/AddWeightTraining.fxml");
     }
     
     public void switchToAddCardio(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "AddCardio.fxml");
+    	switchToPage(event, "Views/AddCardio.fxml");
     }
     
     public void switchToHistoryTypeSelect(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "HistoryTypeSelect.fxml");
+    	switchToPage(event, "Views/HistoryTypeSelect.fxml");
     }
     
     public void switchToCardioHistory(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "CardioHistory.fxml");
+    	switchToPage(event, "Views/CardioHistory.fxml");
     }
     
     public void switchToWeightHistory(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "WeightHistory.fxml");
+    	switchToPage(event, "Views/WeightHistory.fxml");
     }
     
 
@@ -230,7 +234,7 @@ public class Controller implements Initializable {
         workout.addWeightExercise(entry);
         
         // Swaps back to the home page after hitting the submit button
-        switchToPage(e, "Homepage.fxml"); // TODO: change this to use switchToHomepage()
+        switchToPage(e, "Views/Homepage.fxml"); // TODO: change this to use switchToHomepage()
     }
     
     /** Grabs user's input from AddCardio page and saves it to database */
@@ -247,7 +251,7 @@ public class Controller implements Initializable {
         workout.addCardioExercise(entry);
         
         //Swaps back to the home page after hitting the submit button
-        switchToPage(e, "Homepage.fxml"); // TODO: change this to use switchToHomepage()
+        switchToPage(e, "Views/Homepage.fxml"); // TODO: change this to use switchToHomepage()
     }
     
     

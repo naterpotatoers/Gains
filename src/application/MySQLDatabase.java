@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import application.Models.CardioTraining;
+import application.Models.Database;
+import application.Models.WeightTraining;
+
 public class MySQLDatabase implements Database {
 	private String host;
 	private String database;
