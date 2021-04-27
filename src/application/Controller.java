@@ -92,10 +92,10 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private UserFile user = new UserFile();
     private WorkoutController workout = new WorkoutController();
     private ArrayList<WeightTraining> weightExercises = new ArrayList<WeightTraining>();
     private ArrayList<CardioTraining> cardioExercises = new ArrayList<CardioTraining>();
-    UserFile user = new UserFile();
     
     /** This function is called on every page load. Used for setting the text from database. */
     @Override
@@ -143,14 +143,14 @@ public class Controller implements Initializable {
     {
     	if(lastWeightTrainingTextArea != null)
     	{    
-//    		String username = user.getUsername();
-//        	weightExercises = workout.getAllWeightWorkouts(username);
-//        	if(weightExercises.isEmpty()) {
-//        		lastWeightTrainingTextArea.setText("No cardio data");
-//        	}
-//        	else {
-//        		lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
-//        	}
+    		String username = user.getUsername();
+        	weightExercises = workout.getAllWeightWorkouts(username);
+        	if(weightExercises.isEmpty()) {
+        		lastWeightTrainingTextArea.setText("No cardio data");
+        	}
+        	else {
+        		lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
+        	}
     	}
     }
     
@@ -159,14 +159,14 @@ public class Controller implements Initializable {
     {
     	if(lastCardioTextArea != null)
     	{    
-//    		String username = user.getUsername();
-//        	cardioExercises = workout.getAllCardioWorkouts(username);
-//        	if(weightExercises.isEmpty()) {
-//        		lastCardioTextArea.setText("No weight data");
-//        	}
-//        	else {
-//        		lastCardioTextArea.setText(cardioExercises.get(0).toString());
-//        	}   	
+    		String username = user.getUsername();
+        	cardioExercises = workout.getAllCardioWorkouts(username);
+        	if(weightExercises.isEmpty()) {
+        		lastCardioTextArea.setText("No weight data");
+        	}
+        	else {
+        		lastCardioTextArea.setText(cardioExercises.get(0).toString());
+        	}   	
     	}
     }
     

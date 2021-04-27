@@ -9,13 +9,16 @@ import java.io.IOException;
 
 public class UserFile {
 	private String fileName = "username.txt";
-	private int numberOfCharacters = 99;
 	private String username = "";
 	
 	public UserFile() {
 		checkUsername();
 	}
     
+	/**
+	 * Grabs username from username.txt.
+	 * @return username String
+	 */
     public String getUsername() {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(fileName));
@@ -29,6 +32,7 @@ public class UserFile {
 		return username;
     }
 
+    /** Verifies that username exists, otherwise will create new one. */
 	private void checkUsername()  {
 		try {
 			if(getUsername().isEmpty()) {
@@ -42,7 +46,9 @@ public class UserFile {
 		}
 	}
     
+	/** Creates random character string for new username. */
 	private String createUsername() {
+		int numberOfCharacters = 99;
         for (int i = 0; i < numberOfCharacters; i++) {
             int v = 1 + (int) (Math.random() * 26);
             char c = (char) (v + (i == 0 ? 'A' : 'a') - 1);
@@ -51,6 +57,7 @@ public class UserFile {
         return username;
 	}
 	
+	/** Saves username to username.txt file */
     private void setUsername(String data){
         try{
             FileWriter fstream = new FileWriter(fileName, false);
