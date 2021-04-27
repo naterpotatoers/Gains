@@ -14,12 +14,12 @@ public class WorkoutController {
 	private String dbPassword = "Leanahtan523509";
 	private MySQLDatabase database;
 	
+	
+	WorkoutController(){}
+	
 	/** Connects to database */
-	WorkoutController(){
-		// TODO: Might want to move this part outside the constructor to prevent reconnecting on every page switch
-		System.out.print("Connecting to " + this.host + " MySQL database... ");
+	private void ConnectToDatabase() {
 		database = new MySQLDatabase(host, dbName, dbUsername, dbPassword);
-		System.out.println("Connected!");
 	}
 	
 	/**
@@ -30,6 +30,7 @@ public class WorkoutController {
 		String dbTable = "workout";
 		System.out.println("Fetching data from " + dbTable +" table...");
 		String sql = "SELECT * FROM " + dbTable + " WHERE username = 'nate' ORDER BY workoutDate DESC";
+		ConnectToDatabase();
 		ArrayList<WeightTraining>weightExercises = database.queryWeightTable(sql);
 		return weightExercises;
 	}
@@ -42,6 +43,7 @@ public class WorkoutController {
 		String dbTable = "cardio";
 		System.out.println("Fetching data from " + dbTable +" table...");
 		String sql = "SELECT * FROM " + dbTable + " WHERE username = 'nate' ORDER BY workoutDate DESC";
+		ConnectToDatabase();
 		ArrayList<CardioTraining>cardioExercises = database.queryCardioTable(sql);
 		return cardioExercises;
 	}
@@ -53,6 +55,7 @@ public class WorkoutController {
 	public void addWeightExercise(WeightTraining exercise) {
 		System.out.print("Adding weights exercise to database... ");
 		String sql = "INSERT INTO workout (username, workoutName, difficulty, duration, workoutDate, weight, sets, reps) VALUES (?,?,?,?,?,?,?,?)";
+		ConnectToDatabase();
 		try (PreparedStatement statement = database.connectDatabase().prepareStatement(sql)) {
 			statement.setString(1, exercise.getUsername());
 			statement.setString(2, exercise.getWorkoutName());
@@ -76,6 +79,7 @@ public class WorkoutController {
 	public void addCardioExercise(CardioTraining exercise) {
 		System.out.print("Adding cardio exercise to database... ");
 		String sql = "INSERT INTO cardio (username, workoutName, difficulty, duration, workoutDate) VALUES (?,?,?,?,?)";
+		ConnectToDatabase();
 		try (PreparedStatement statement = database.connectDatabase().prepareStatement(sql)) {
 			statement.setString(1, exercise.getUsername());
 			statement.setString(2, exercise.getWorkoutName());
