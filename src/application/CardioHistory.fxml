@@ -16,7 +16,7 @@
          </font>
       </Label>
       <Button layoutX="73.0" layoutY="427.0" mnemonicParsing="false" onAction="#switchToHomepage" text="Back to Home" />
-      <TableView fx:id="cardioHistroyTable" layoutX="26.0" layoutY="131.0" prefHeight="251.0" prefWidth="723.0">
+      <TableView fx:id="cardioHistoryTable" layoutX="26.0" layoutY="131.0" prefHeight="251.0" prefWidth="723.0">
          <columns>
             <TableColumn fx:id="cardioHistoryDateColumn" prefWidth="122.0" text="Date" />
             <TableColumn fx:id="cardioHistoryDurationColumn" minWidth="3.0" prefWidth="200.0" text="Duration" />

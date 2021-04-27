@@ -1,5 +1,7 @@
 package application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +15,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * 
@@ -55,17 +58,32 @@ public class Controller implements Initializable {
     @FXML
     private TextField difficultyLevelLabel2;
     @FXML
-    private TableView cardioHistroyTable;
+    private TableView<CardioTraining> cardioHistoryTable;
     @FXML
-    private TableColumn cardioHistoryDateColumn;
+    private TableColumn<CardioTraining, Date> cardioHistoryDateColumn;
     @FXML
-    private TableColumn cardioHistoryDurationColumn;
+    private TableColumn<CardioTraining, String> cardioHistoryDurationColumn;
     @FXML
-    private TableColumn cardioHistoryExerciseNameColumn;
+    private TableColumn<CardioTraining, String> cardioHistoryExerciseNameColumn;
     @FXML
-    private TableColumn cardioHistoryDifficultyColumn;
+    private TableColumn<CardioTraining, String> cardioHistoryDifficultyColumn;
+    @FXML
+    private TableView<WeightTraining> weightHistoryTable;
+    @FXML
+    private TableColumn<WeightTraining, Date> weightHistoryDateColumn;
+    @FXML
+    private TableColumn<WeightTraining, Date> weightHistoryExerciseNameColumn;
+    @FXML
+    private TableColumn<WeightTraining, String> weightHistoryDurationColumn;
+    @FXML
+    private TableColumn<WeightTraining, String> weightHistoryWeightColumn;
+    @FXML
+    private TableColumn<WeightTraining, Date> weightHistorySetsColumn;
+    @FXML
+    private TableColumn<WeightTraining, Date> weightHistoryRepsColumn;
+    @FXML
+    private TableColumn<WeightTraining, Date> weightHistoryDifficultyColumn;
     
-
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -80,20 +98,36 @@ public class Controller implements Initializable {
     	displayLastWeightTraining();
     	displayLastCardio();
     	displayCardioHistory();
+    	displayWeightHistory();
     	displayTip();
 	}
-    /** WIP - Populates CardioHistory.fxml page with cardio data */
+    
+    /** Populates WeightHistory.fxml page with weight data */
+    public void displayWeightHistory() {
+        if (weightHistoryTable != null){
+            weightExercises = workout.getAllWeightWorkouts();
+            ObservableList<WeightTraining> weightWorkouts = FXCollections.observableArrayList(weightExercises);
+            weightHistoryDateColumn.setCellValueFactory(new PropertyValueFactory<>("workoutDate"));
+            weightHistoryExerciseNameColumn.setCellValueFactory(new PropertyValueFactory<>("workoutName"));
+            weightHistoryDurationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+            weightHistoryWeightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
+            weightHistorySetsColumn.setCellValueFactory(new PropertyValueFactory<>("sets"));
+            weightHistoryRepsColumn.setCellValueFactory(new PropertyValueFactory<>("reps"));
+            weightHistoryDifficultyColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+            weightHistoryTable.setItems(weightWorkouts);
+        }
+	}
+    
+	/** Populates CardioHistory.fxml page with cardio data */
 	public void displayCardioHistory(){
-		// TODO: Need to add table rows now edit table headers
-        if (cardioHistroyTable != null){
+        if (cardioHistoryTable != null){
             cardioExercises = workout.getAllCardioWorkouts();
-            for (CardioTraining exercise : cardioExercises){
-                cardioHistoryDateColumn.setText(exercise.getWorkoutDate().toString());
-                cardioHistoryDurationColumn.setText(exercise.getDuration());
-                cardioHistoryExerciseNameColumn.setText(exercise.getWorkoutName());
-                cardioHistoryDifficultyColumn.setText(exercise.getDifficulty());
-            }
-
+            ObservableList<CardioTraining> cardioWorkouts = FXCollections.observableArrayList(cardioExercises);
+            cardioHistoryDateColumn.setCellValueFactory(new PropertyValueFactory<>("workoutDate"));
+            cardioHistoryDurationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+            cardioHistoryExerciseNameColumn.setCellValueFactory(new PropertyValueFactory<>("workoutName"));
+            cardioHistoryDifficultyColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+            cardioHistoryTable.setItems(cardioWorkouts);
         }
     }
 
