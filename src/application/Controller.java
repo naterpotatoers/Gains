@@ -20,6 +20,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
+
 import application.Models.CardioTraining;
 import application.Models.WeightTraining;
 import application.Resources.UserFile;
@@ -61,7 +63,7 @@ public class Controller implements Initializable {
     @FXML 
     private TextArea WorkoutTipTextArea;
     @FXML
-    private TextField difficultyLevelLabel2;
+    private TextField difficultyLevelLabelCardio;
     @FXML
     private TableView<CardioTraining> cardioHistoryTable;
     @FXML
@@ -149,7 +151,10 @@ public class Controller implements Initializable {
         		lastWeightTrainingTextArea.setText("No cardio data");
         	}
         	else {
-        		lastWeightTrainingTextArea.setText(weightExercises.get(0).toString());
+        		String recentEntry = weightExercises.get(0).toString();
+        		recentEntry = (recentEntry.substring(recentEntry.indexOf("WorkoutDate:")));
+        		lastWeightTrainingTextArea.setText(recentEntry);
+        		
         	}
     	}
     }
@@ -165,7 +170,9 @@ public class Controller implements Initializable {
         		lastCardioTextArea.setText("No weight data");
         	}
         	else {
-        		lastCardioTextArea.setText(cardioExercises.get(0).toString());
+        		String recentEntry = cardioExercises.get(0).toString();
+        		recentEntry = (recentEntry.substring(recentEntry.indexOf("WorkoutDate:")));
+        		lastCardioTextArea.setText(recentEntry);
         	}   	
     	}
     }
@@ -208,7 +215,7 @@ public class Controller implements Initializable {
     {
         String username = user.getUsername();
         String exerciseName = exerciseNameLabel.getText();
-        String difficultyLevel = difficultyLevelLabel2.getText();
+        String difficultyLevel = difficultyLevelLabel.getText();
         String duration = durationLabel.getText();
         LocalDate localDate = myDatePicker.getValue();
         // Convert data types
@@ -271,8 +278,7 @@ public class Controller implements Initializable {
     }
     
     /** Validates user input such that only numbers can be entered into text fields */
-    public void numberFormatter(KeyEvent event) {
-    	// TODO: Make helper function to reduce repeated code such that we only need to pass in fx:id
+    public void weightClientValidation(KeyEvent event) {
     	numberOfSetsLabel.textProperty().addListener((observable, oldValue, newValue) -> {
     		if (!newValue.matches("\\d*")) {
     			numberOfSetsLabel.setText(newValue.replaceAll("[^\\d]", ""));
@@ -297,24 +303,22 @@ public class Controller implements Initializable {
     		}
     	});
 
-    	difficultyLevelLabel.setTextFormatter(new TextFormatter<>(this::filter));
+    	difficultyLevelLabel.setTextFormatter(new TextFormatter<>(this::filterOneThroughTen));
 
     }
 
     /** Validates user input such that only numbers can be entered into text fields */
-    public void numberFormatter2(KeyEvent event) { 
-    	// TODO: Not sure why there are two separate formatter handlers, might need to refactor code
+    public void cardioClientValidation(KeyEvent event) { 
     	durationLabel.textProperty().addListener((observable, oldValue, newValue) -> {
     		if (!newValue.matches("\\d*")) {
     			durationLabel.setText(newValue.replaceAll("[^\\d]", ""));
     		}
     	});
-    	difficultyLevelLabel2.setTextFormatter(new TextFormatter<>(this::filter));
+    	difficultyLevelLabelCardio.setTextFormatter(new TextFormatter<>(this::filterOneThroughTen));
     }
     
-    /** Deletes bad user input? */
-    private TextFormatter.Change filter(TextFormatter.Change change) {
-    	// TODO: Not sure why we would want to reset text field? Seems like poor user experience
+    /** Limits text field input to numbers 1 through 10 */
+    private TextFormatter.Change filterOneThroughTen(TextFormatter.Change change) {
     	if (!change.getControlNewText().matches("([1-9]|1[0-0])")) {
     		change.setText("");
     	}

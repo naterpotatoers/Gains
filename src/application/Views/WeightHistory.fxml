@@ -17,13 +17,13 @@
       <Button layoutX="73.0" layoutY="427.0" mnemonicParsing="false" onAction="#switchToHomepage" text="Back to Home" />
       <TableView fx:id="weightHistoryTable" layoutX="26.0" layoutY="131.0" prefHeight="251.0" prefWidth="723.0">
         <columns>
-            <TableColumn fx:id="weightHistoryDateColumn" prefWidth="107.0" text="Date" />
-            <TableColumn fx:id="weightHistoryExerciseNameColumn" prefWidth="125.0" text="Exercise Name" />
-            <TableColumn fx:id="weightHistoryDurationColumn" minWidth="3.0" text="Duration" />
+            <TableColumn fx:id="weightHistoryDateColumn" prefWidth="120.0" text="Date" />
+            <TableColumn fx:id="weightHistoryExerciseNameColumn" prefWidth="287.0" text="Exercise Name" />
             <TableColumn fx:id="weightHistoryWeightColumn" text="Weight" />
             <TableColumn fx:id="weightHistorySetsColumn" text="Sets" />
-            <TableColumn fx:id="weightHistoryRepsColumn" prefWidth="125.0" text="Number of Reps" />
-            <TableColumn fx:id="weightHistoryDifficultyColumn" prefWidth="125.0" text="Difficulty Level" />
+            <TableColumn fx:id="weightHistoryRepsColumn" text="Reps" />
+            <TableColumn fx:id="weightHistoryDurationColumn" text="Duration" />
+            <TableColumn fx:id="weightHistoryDifficultyColumn" prefWidth="100.0" text="Difficulty (1-10)" />
         </columns>
       </TableView>
       <Label layoutX="26.0" layoutY="74.0" text="Weight Training History" />
