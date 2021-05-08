@@ -187,7 +187,7 @@ public class Controller implements Initializable {
     }
 
     /** Grabs user's input from AddWeightTraining page and saves it to database */
-    public void submitAndSaveWeightTraining(ActionEvent e) throws IOException
+    public void saveWeightTraining(ActionEvent e) throws IOException
     {
         String username = user.getUsername();
         String exerciseName = exerciseNameLabel.getText();
@@ -211,11 +211,11 @@ public class Controller implements Initializable {
     }
     
     /** Grabs user's input from AddCardio page and saves it to database */
-    public void submitAndSaveCardio(ActionEvent e) throws IOException
+    public void saveCardioTraining(ActionEvent e) throws IOException
     {
         String username = user.getUsername();
         String exerciseName = exerciseNameLabel.getText();
-        String difficultyLevel = difficultyLevelLabel.getText();
+        String difficultyLevel = difficultyLevelLabelCardio.getText();
         String duration = durationLabel.getText();
         LocalDate localDate = myDatePicker.getValue();
         // Convert data types
@@ -259,7 +259,7 @@ public class Controller implements Initializable {
     
     public void switchToAddCardio(ActionEvent event) throws IOException
     {
-    	switchToPage(event, "Views/AddCardio.fxml");
+    	switchToPage(event, "Views/AddCardioTraining.fxml");
     }
     
     public void switchToHistoryTypeSelect(ActionEvent event) throws IOException

@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="778.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller">
     <children>
-        <Label fx:id="labelTitle" layoutY="-3.0" prefHeight="93.0" prefWidth="778.0" text="Gains" textAlignment="CENTER">
+        <Label layoutY="-3.0" prefHeight="93.0" prefWidth="778.0" text="Gains" textAlignment="CENTER">
             <font>
                 <Font size="50.0" />
             </font>
@@ -17,19 +17,19 @@
         
         <Label layoutX="26.0" layoutY="74.0" text="Add Cardio" />
         
-        <Label fx:id="labelWorkout" layoutX="26.0" layoutY="131.0" prefHeight="26.0" prefWidth="104.0" text="Workout Date" />
+        <Label layoutX="26.0" layoutY="131.0" prefHeight="26.0" prefWidth="104.0" text="Workout Date" />
         <DatePicker fx:id="myDatePicker" layoutX="177.0" layoutY="131.0" prefHeight="26.0" prefWidth="150.0" />
         
         <TextField fx:id="exerciseNameLabel" layoutX="525.0" layoutY="131.0" />
-        <Label fx:id="labelRecommendations" layoutX="398.0" layoutY="131.0" prefHeight="26.0" prefWidth="122.0" text="Exercise Name" textAlignment="CENTER" />
+        <Label layoutX="398.0" layoutY="131.0" prefHeight="26.0" prefWidth="122.0" text="Exercise Name" textAlignment="CENTER" />
         
-        <Label layoutX="26.0" layoutY="203.0" prefHeight="18.0" prefWidth="150.0" text="Duration" />
+        <Label layoutX="26.0" layoutY="203.0" prefHeight="18.0" prefWidth="150.0" text="Duration (Minutes)" />
         <TextField fx:id="durationLabel" layoutX="177.0" layoutY="200.0" onKeyPressed="#cardioClientValidation" promptText="unit in minutes" />
         
-        <Label layoutX="398.0" layoutY="204.0" prefHeight="18.0" prefWidth="83.0" text="Difficulty Level" />
+        <Label layoutX="398.0" layoutY="204.0" prefHeight="18.0" prefWidth="83.0" text="Difficulty (1-10)" />
       	<TextField fx:id="difficultyLevelLabelCardio" layoutX="525.0" layoutY="200.0" onKeyPressed="#cardioClientValidation" promptText="scale from 1-10" />
       	
-        <Button fx:id="buttonViewHistory" layoutX="552.0" layoutY="426.0" mnemonicParsing="false" onAction="#submitAndSaveCardio" prefHeight="26.0" prefWidth="122.0" text="Submit &amp; Save" />
+        <Button layoutX="552.0" layoutY="426.0" mnemonicParsing="false" onAction="#saveCardioTraining" prefHeight="26.0" prefWidth="122.0" text="Submit &amp; Save" />
       	<Button layoutX="73.0" layoutY="427.0" mnemonicParsing="false" onAction="#switchToHomepage" text="Back to Home" />
     </children>
 </AnchorPane>
