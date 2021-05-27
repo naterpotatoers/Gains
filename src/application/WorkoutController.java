@@ -11,10 +11,10 @@ import application.Models.WeightTraining;
 
 public class WorkoutController {
 	// TODO: Not safe but oh well...
-	private String host = "cs151-gains-db.cjsjim1qtdlq.us-west-2.rds.amazonaws.com/";
+	private String host = "localhost";
 	private String dbName = "gains";
 	private String dbUsername = "root";
-	private String dbPassword = "Leanahtan523509";
+	private String dbPassword = "password";
 	private MySQLDatabase database;
 	
 	
